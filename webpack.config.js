@@ -7,7 +7,7 @@ const cssnano = require('cssnano');
 
 module.exports = {
   devtool: 'source-map',
-  entry: { main: './src/scripts/index.js' },
+  entry: { main: './src/index.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'main.js',
