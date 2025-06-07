@@ -1,39 +1,44 @@
-// Функция создания карточки
-function createCard(cardData, handleDeleteCard, handleLikeCard) {
-  const cardTemplate = document.querySelector('#card-template').content.querySelector('.card');
-  const cardElement = cardTemplate.cloneNode(true);
+// Функция создания карточки 
+function createCard(cardData, handleDeleteCard, handleLikeCard, handleCardClick) { 
+  const cardTemplate = document.querySelector('#card-template').content.querySelector('.card'); 
+  const cardElement = cardTemplate.cloneNode(true); 
 
-  const cardImage = cardElement.querySelector('.card__image');
-  const cardTitle = cardElement.querySelector('.card__title');
-  const deleteButton = cardElement.querySelector('.card__delete-button');
-  const likeButton = cardElement.querySelector('.card__like-button');
+  const cardImage = cardElement.querySelector('.card__image'); 
+  const cardTitle = cardElement.querySelector('.card__title'); 
+  const deleteButton = cardElement.querySelector('.card__delete-button'); 
+  const likeButton = cardElement.querySelector('.card__like-button'); 
 
-  cardImage.src = cardData.link;
-  cardImage.alt = cardData.name;
-  cardTitle.textContent = cardData.name;
+  cardImage.src = cardData.link; 
+  cardImage.alt = cardData.name; 
+  cardTitle.textContent = cardData.name; 
 
-  // Обработчики лайка и удаления карточки
-  deleteButton.addEventListener('click', () => {
-    handleDeleteCard(cardElement);
+  // Обработчик клика по изображению карточки
+  cardImage.addEventListener('click', () => {
+    handleCardClick(cardData.link, cardData.name);
   });
 
-  likeButton.addEventListener('click', () => {
-    handleLikeCard(likeButton);
-  });
+  // Обработчики лайка и удаления карточки 
+  deleteButton.addEventListener('click', () => { 
+    handleDeleteCard(cardElement); 
+  }); 
 
-  // Возвращаем элемент карточки
-  return cardElement;
-}
+  likeButton.addEventListener('click', () => { 
+    handleLikeCard(likeButton); 
+  }); 
 
-// Функция обработки лайка
-function handleLikeCard(likeButton) {
-  likeButton.classList.toggle('card__like-button_is-active');
-}
+  // Возвращаем элемент карточки 
+  return cardElement; 
+} 
 
-// Функция удаления карточки
-function handleDeleteCard(cardElement) {
-  cardElement.remove();
-}
+// Функция обработки лайка 
+function handleLikeCard(likeButton) { 
+  likeButton.classList.toggle('card__like-button_is-active'); 
+} 
 
-// Экспортируем функции
+// Функция удаления карточки 
+function handleDeleteCard(cardElement) { 
+  cardElement.remove(); 
+} 
+
+// Экспортируем функции 
 export { createCard, handleLikeCard, handleDeleteCard };
