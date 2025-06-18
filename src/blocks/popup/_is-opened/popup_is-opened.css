@@ -5,3 +5,18 @@
   pointer-events: all;
   transition: visibility 0s, opacity 0.6s;
 }
+
+.popup__input_type_error {
+  border-color: red;
+}
+
+.popup__error_visible {
+  color: red;
+  font-size: 12px;
+  height: 14px;
+}
+
+.popup__submit_disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
