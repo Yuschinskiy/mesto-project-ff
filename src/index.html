@@ -31,6 +31,8 @@
       <footer class="footer page__section">
         <p class="footer__copyright">© 2021 Mesto Russia</p>
       </footer>
+
+      <!-- Попап редактирования профиля -->
       <div class="popup popup_type_edit">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
@@ -68,6 +70,8 @@
           </form>
         </div>
       </div>
+
+      <!-- Попап добавления новой карточки -->
       <div class="popup popup_type_new-card">
         <div class="popup__content">
           <button type="button" class="popup__close"></button>
@@ -103,11 +107,25 @@
           </form>
         </div>
       </div>
+
+      <!-- Попап просмотра изображения -->
       <div class="popup popup_type_image">
         <div class="popup__content popup__content_content_image">
           <button type="button" class="popup__close"></button>
           <img alt="" class="popup__image" />
           <p class="popup__caption"></p>
+        </div>
+      </div>
+
+      <!-- Попап подтверждения удаления карточки -->
+      <div class="popup popup_type_confirm" id="popupConfirmDelete">
+        <div class="popup__content">
+          <button type="button" class="popup__close"></button>
+          <h3 class="popup__title">Вы уверены?</h3>
+          <form class="popup__form" name="confirmDeleteForm" novalidate>
+            <button type="submit" class="button popup__button popup__submit">Да</button>
+            <button type="button" class="button popup__button popup__cancel-button">Нет</button>
+          </form>
         </div>
       </div>
     </div>
@@ -119,8 +137,11 @@
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button type="button" class="card__like-button"></button>
+          <span class="card__like-count">0</span>
         </div>
       </li>
     </template>
+
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
