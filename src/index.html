@@ -49,6 +49,8 @@
               required
               minlength="2"
               maxlength="40"
+              pattern="^[а-яёa-z\s-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, дефисы и пробелы"
             />
             <span class="popup__error name-error"></span>
 
@@ -60,6 +62,8 @@
               required
               minlength="2"
               maxlength="200"
+              pattern="^[а-яёa-z\s-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, дефисы и пробелы"
             />
             <span class="popup__error description-error"></span>
 
@@ -88,12 +92,16 @@
               required
               minlength="2"
               maxlength="30"
+              pattern="^[а-яёa-z\s-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, дефисы и пробелы"
             />
             <span class="popup__error place-name-error"></span>
 
             <input
               type="url"
               name="link"
+              pattern="^[а-яёa-z\s-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, дефисы и пробелы"
               class="popup__input popup__input_type_url"
               placeholder="Ссылка на картинку"
               required

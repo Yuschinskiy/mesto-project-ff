@@ -22,7 +22,7 @@ import {
   updateUserAvatar
 } from './components/api.js';
 import { openPopup, closePopup, setPopupCloseByOverlay } from './components/modal.js';
-import { enableValidation, clearValidation, validationConfig } from './components/validation.js';
+import { enableValidation, clearValidation } from './components/validation.js';
 import avatar from './images/avatar.jpg';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -55,6 +55,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const formEditAvatar = popupEditAvatar.querySelector('.popup__form');
   const avatarInput = formEditAvatar.querySelector('input[name="avatar-link"]');
 
+  // Получаем кнопки отправки форм
+  const profileSubmitButton = formEditProfile.querySelector('.popup__submit');
+  const newPlaceSubmitButton = formNewPlace.querySelector('.popup__submit');
+  const avatarSubmitButton = formEditAvatar.querySelector('.popup__submit');
+
+  const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__error_visible'
+};
+
   let currentUserId = null;
   let cardIdToDelete = null;
   let cardElementToDelete = null;
@@ -65,6 +79,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Устанавливаем аватар по умолчанию (локальный файл)
   if (profileAvatarImage) {
     profileAvatarImage.style.backgroundImage = `url(${avatar})`;
+  }
+
+  // Универсальная функция для смены текста кнопки и блокировки
+  function renderLoading(button, isLoading, defaultText = 'Сохранить') {
+    if (isLoading) {
+      button.textContent = 'Сохранение...';
+      button.disabled = true;
+    } else {
+      button.textContent = defaultText;
+      button.disabled = false;
+    }
   }
 
   // Функция открытия попапа с изображением
@@ -160,13 +185,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   formEditProfile.addEventListener('submit', evt => {
     evt.preventDefault();
+    renderLoading(profileSubmitButton, true, 'Сохранить');
     updateUserInfo(nameInput.value, descriptionInput.value)
       .then(updatedUser => {
         profileName.textContent = updatedUser.name;
         profileDescription.textContent = updatedUser.about;
         closePopup(popupEdit);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
+      .finally(() => {
+        renderLoading(profileSubmitButton, false, 'Сохранить');
+      });
   });
 
   // Обработчик добавления новой карточки
@@ -178,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   formNewPlace.addEventListener('submit', evt => {
     evt.preventDefault();
+    renderLoading(newPlaceSubmitButton, true, 'Создать');
     addNewCard({ name: placeNameInput.value, link: placeLinkInput.value })
       .then(newCard => {
         const cardElement = createCard(newCard, handleDeleteCard, handleLikeCard, openImagePopup, currentUserId, openDeletePopup);
@@ -186,7 +216,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clearValidation(formNewPlace, validationConfig);
         closePopup(popupNewCard);
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error(err))
+      .finally(() => {
+        renderLoading(newPlaceSubmitButton, false, 'Создать');
+      });
   });
 
   // Обработчик закрытия попапов по кнопкам закрытия и оверлею
@@ -216,6 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Обработка отправки формы обновления аватара
   formEditAvatar.addEventListener('submit', evt => {
     evt.preventDefault();
+    renderLoading(avatarSubmitButton, true, 'Сохранить');
     const avatarUrl = avatarInput.value;
     updateUserAvatar(avatarUrl)
       .then(updatedUser => {
@@ -224,7 +258,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         closePopup(popupEditAvatar);
       })
-      .catch(err => console.error('Ошибка обновления аватара:', err));
+      .catch(err => console.error('Ошибка обновления аватара:', err))
+      .finally(() => {
+        renderLoading(avatarSubmitButton, false, 'Сохранить');
+      });
   });
 
   // Включаем валидацию форм
