@@ -16,6 +16,9 @@
       </header>
       <main class="content">
         <section class="profile page__section">
+          <div class="profile__avatar-container">
+            <div class="profile__avatar-image"></div>
+          </div>
           <div class="profile__image"></div>
           <div class="profile__info">
             <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -123,8 +126,39 @@
           <button type="button" class="popup__close"></button>
           <h3 class="popup__title">Вы уверены?</h3>
           <form class="popup__form" name="confirmDeleteForm" novalidate>
-            <button type="submit" class="button popup__button popup__submit">Да</button>
-            <button type="button" class="button popup__button popup__cancel-button">Нет</button>
+            <button type="submit" class="button popup__button popup__submit">
+              Да
+            </button>
+            <button
+              type="button"
+              class="button popup__button popup__cancel-button"
+            >
+              Нет
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Попап редактирования аватара -->
+      <div class="popup popup_type_edit-avatar">
+        <div class="popup__content">
+          <button type="button" class="popup__close"></button>
+          <h3 class="popup__title">Обновить аватар</h3>
+          <form class="popup__form" name="edit-avatar" novalidate>
+            <input
+              type="url"
+              name="avatar-link"
+              class="popup__input popup__input_type_avatar"
+              placeholder="Ссылка на аватар"
+              required
+            />
+            <span class="popup__error avatar-link-error"></span>
+            <button
+              type="submit"
+              class="button popup__button popup__submit"
+              disabled
+            >
+              Сохранить
+            </button>
           </form>
         </div>
       </div>
@@ -141,7 +175,5 @@
         </div>
       </li>
     </template>
-
-    <script type="module" src="./index.js"></script>
   </body>
 </html>
