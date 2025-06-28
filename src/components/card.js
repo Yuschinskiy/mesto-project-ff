@@ -14,23 +14,27 @@ export function createCard(cardData, handleDeleteCard, handleLikeCard, openImage
   likeCount.textContent = cardData.likes.length;
 
   // Проверяем, поставил ли текущий пользователь лайк
-  const userHasLiked = cardData.likes.some(user => user._id === currentUserId);
-  if (userHasLiked) {
+  const isLiked = () => cardData.likes.some(user => user._id === currentUserId);
+
+  // Устанавливаем начальное состояние кнопки лайка
+  if (isLiked()) {
     likeButton.classList.add('card__like-button_active');
   }
 
   // Обработчик лайка
   likeButton.addEventListener('click', () => {
-    handleLikeCard(cardData._id, userHasLiked)
+    handleLikeCard(cardData._id, isLiked())
       .then(updatedCard => {
+        // Обновляем данные карточки
+        cardData = updatedCard;
         likeCount.textContent = updatedCard.likes.length;
-        if (updatedCard.likes.some(user => user._id === currentUserId)) {
-          likeButton.classList.add('card__like-button_active');
+        if (isLiked()) {
+          likeButton.classList.add('card__like-button_is-active');
         } else {
-          likeButton.classList.remove('card__like-button_active');
+          likeButton.classList.remove('card__like-button_is-active');
         }
       })
-      .catch(err => console.error(err));
+      .catch(err => console.error('Ошибка при обновлении лайка:', err));
   });
 
   // Показываем кнопку удаления только если карточка принадлежит текущему пользователю

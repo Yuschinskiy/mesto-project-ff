@@ -2,3 +2,9 @@
   background: transparent url('../../../../images/like-active.svg') no-repeat;
   background-size: 21px 18px;
 }
+
+.card__like-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
