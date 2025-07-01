@@ -1,5 +1,4 @@
 export function createCard(cardData, handleDeleteCard, handleLikeCard, openImagePopup, currentUserId, openDeletePopup) { 
-
   const template = document.querySelector('#card-template').content.querySelector('.card'); 
   const cardElement = template.cloneNode(true); 
 
@@ -12,35 +11,32 @@ export function createCard(cardData, handleDeleteCard, handleLikeCard, openImage
   cardImage.src = cardData.link; 
   cardImage.alt = cardData.name; 
   cardTitle.textContent = cardData.name; 
-  likeCount.textContent = cardData.likes.length; 
 
-  // Проверяем, поставил ли текущий пользователь лайк 
-  const isLiked = () => cardData.likes.some(user => user._id === currentUserId); 
-
-  // Устанавливаем начальное состояние кнопки лайка 
-  if (isLiked()) { 
-    likeButton.classList.add('card__like-button_active'); 
-  } else {
-    likeButton.classList.remove('card__like-button_active');
+  // Обновляет отображение лайков и кнопки
+  function updateLikes() {
+    likeCount.textContent = cardData.likes ? cardData.likes.length : 0;
+    const liked = cardData.likes && cardData.likes.some(user => user._id === currentUserId);
+    if (liked) {
+      likeButton.classList.add('card__like-button_is-active');
+    } else {
+      likeButton.classList.remove('card__like-button_is-active');
+    }
   }
 
-  // Обработчик лайка 
+  updateLikes();
+
   likeButton.addEventListener('click', () => { 
-    handleLikeCard(cardData._id, isLiked()) 
+    const liked = cardData.likes && cardData.likes.some(user => user._id === currentUserId);
+
+    handleLikeCard(cardData._id, liked) 
       .then(updatedCard => { 
-        cardData = updatedCard; 
-        likeCount.textContent = updatedCard.likes.length; 
-        if (isLiked()) { 
-          likeButton.classList.add('card__like-button_active'); 
-        } else { 
-          likeButton.classList.remove('card__like-button_active'); 
-        } 
+        cardData.likes = updatedCard.likes; // обновляем лайки в локальном объекте
+        updateLikes();
       }) 
       .catch(err => console.error('Ошибка при обновлении лайка:', err)); 
   }); 
 
-  // Управление видимостью кнопки удаления через класс
-  if (cardData.owner._id !== currentUserId) { 
+  if (cardData.owner && cardData.owner._id !== currentUserId) { 
     deleteButton.classList.add('card__delete-button_hidden');
   } else { 
     deleteButton.classList.remove('card__delete-button_hidden');
@@ -49,7 +45,6 @@ export function createCard(cardData, handleDeleteCard, handleLikeCard, openImage
     }); 
   } 
 
-  // Открытие попапа с картинкой 
   cardImage.addEventListener('click', () => { 
     openImagePopup(cardData.link, cardData.name); 
   }); 

@@ -29,5 +29,16 @@ function setPopupCloseByOverlay(popup) {
   });
 }
 
-// Экспортируем функции
-export { openPopup, closePopup, setPopupCloseByOverlay };
+function openImagePopup(link, name) {
+  const popup = document.querySelector('.popup_type_image'); // класс вашего попапа с картинкой
+  const popupImage = popup.querySelector('.popup__image');
+  const popupCaption = popup.querySelector('.popup__caption');
+
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupCaption.textContent = name;
+
+  openPopup(popup);
+}
+
+export { openPopup, closePopup, setPopupCloseByOverlay, openImagePopup };
