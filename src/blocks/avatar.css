@@ -3,9 +3,11 @@
   width: 120px;
   height: 120px;
   cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
-/* Затемнение при наведении на контейнер */
+/* Затемнение при наведении */
 .profile__avatar-container:hover::after {
   content: "";
   position: absolute;
@@ -16,9 +18,28 @@
   pointer-events: none;
 }
 
-/* Кнопка редактирования — показываем при наведении */
+/* Иконка редактирования (центральная) */
+.profile__image-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 3;
+}
+
+/* Появление иконки при наведении */
+.profile__avatar-container:hover .profile__image-icon {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Если есть кнопка редактирования в углу */
 .profile__avatar-edit-button {
-  display: none;
   position: absolute;
   bottom: 0;
   right: 0;
@@ -32,41 +53,12 @@
   cursor: pointer;
   z-index: 3;
   box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
 .profile__avatar-container:hover .profile__avatar-edit-button {
-  display: block;
-}
-
-/* Размер попапа */
-.popup_type_edit-avatar {
-  width: 430px;
-  height: 272px;
-}
-
-.popup_type_confirm {
-  width: 430px;
-  height: 181px;
-}
-
-/* Иконка редактирования */
-.profile__image-icon {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 26px;
-  height: 26px;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 3;
-}
-
-/* Появление иконки при наведении на контейнер */
-.profile__avatar-container:hover .profile__image-icon {
   opacity: 1;
   pointer-events: auto;
 }

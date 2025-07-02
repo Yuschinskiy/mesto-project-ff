@@ -101,8 +101,7 @@ function renderLoading(buttonElement, isLoading, loadingText = 'Сохранен
 // --- Обработчик редактирования профиля ---
 formEditProfile.addEventListener('submit', evt => {
   evt.preventDefault();
-  const submitButton = formEditProfile.querySelector('.popup__submit');
-  renderLoading(submitButton, true);
+  renderLoading(profileSubmitButton, true);
 
   updateUserInfo(nameInput.value, descriptionInput.value)
     .then(updatedUser => {
@@ -112,15 +111,14 @@ formEditProfile.addEventListener('submit', evt => {
     })
     .catch(err => console.error(err))
     .finally(() => {
-      renderLoading(submitButton, false);
+      renderLoading(profileSubmitButton, false);
     });
 });
 
 // --- Обработчик добавления новой карточки ---
 formNewPlace.addEventListener('submit', evt => {
   evt.preventDefault();
-  const submitButton = formNewPlace.querySelector('.popup__submit');
-  renderLoading(submitButton, true);
+  renderLoading(newPlaceSubmitButton, true);
 
   addNewCard({ name: placeNameInput.value, link: placeLinkInput.value })
     .then(newCard => {
@@ -131,15 +129,14 @@ formNewPlace.addEventListener('submit', evt => {
     })
     .catch(err => console.error(err))
     .finally(() => {
-      renderLoading(submitButton, false);
+      renderLoading(newPlaceSubmitButton, false);
     });
 });
 
 // --- Обработка отправки формы обновления аватара ---
 formEditAvatar.addEventListener('submit', evt => {
   evt.preventDefault();
-  const submitButton = formEditAvatar.querySelector('.popup__submit');
-  renderLoading(submitButton, true);
+  renderLoading(avatarSubmitButton, true);
 
   updateUserAvatar(avatarInput.value)
     .then(updatedUser => {
@@ -150,7 +147,7 @@ formEditAvatar.addEventListener('submit', evt => {
     })
     .catch(err => console.error('Ошибка обновления аватара:', err))
     .finally(() => {
-      renderLoading(submitButton, false);
+      renderLoading(avatarSubmitButton, false);
     });
 });
 
@@ -195,13 +192,6 @@ confirmDeleteForm.addEventListener('submit', evt => {
       // Переменные не очищаем, чтобы можно было повторить попытку
     });
 });
-
-// Убираем обработчик отмены удаления, так как кнопки нет
-// cancelDeleteButton.addEventListener('click', () => {
-//   closePopup(popupConfirmDelete);
-//   cardIdToDelete = null;
-//   cardElementToDelete = null;
-// });
 
 // --- Рендер массива карточек ---
 function renderCards(cards) {
@@ -256,19 +246,6 @@ addButton.addEventListener('click', () => {
   formNewPlace.reset();
   clearValidation(formNewPlace, validationConfig);
 });
-
-// formNewPlace.addEventListener('submit', evt => {
-//   evt.preventDefault();
-//   addNewCard({ name: placeNameInput.value, link: placeLinkInput.value })
-//     .then(newCard => {
-//       // Передаём все 6 аргументов в правильном порядке
-//       const cardElement = createCard(newCard, null, handleLikeCard, openImagePopup, currentUserId, openDeletePopup);
-//       placesList.prepend(cardElement);
-//       formNewPlace.reset();
-//       closePopup(popupNewCard);
-//     })
-//     .catch(err => console.error(err));
-// });
 
 // --- Обработчик закрытия попапов по кнопкам закрытия и оверлею ---
 popups.forEach(popup => {

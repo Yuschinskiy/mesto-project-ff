@@ -25,28 +25,3 @@
   transition: opacity 1s ease, visibility 1s ease; 
 }
 
-.popup_type_edit-avatar {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 430px;
-  height: 272px;
-  background: white;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  border-radius: 8px;
-}
-
-.popup_type_confirm {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 430px;
-  height: 181px;
-  background: white;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-  border-radius: 8px;
-}
